@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>規約確認ページ</title>
+  <style>
+    html, body {
+      margin: 0;
+      height: 100%;
+      background: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      cursor: pointer;
+    }
+    #overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 2rem;
+      background: rgba(0,0,0,0.5);
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <video id="myVideo" loop playsinline>
+    <source src="https://cdn.discordapp.com/attachments/1187385738451505233/1409078245810241659/Clipchamp.mp4?ex=68ac11e1&is=68aac061&hm=0ff364c2413fa23954e0a5249e8dd54dcbfc0e812f959e83ef00a42fe9acc10c&" type="video/mp4">
+    お使いのブラウザは動画タグに対応していません。
+  </video>
+
+  <div id="overlay">クリックしてルールを確認してください</div>
+
+  <script>
+    const video = document.getElementById('myVideo');
+    const overlay = document.getElementById('overlay');
+
+    overlay.addEventListener('click', async () => {
+      try {
+        // 全画面表示
+        if (video.requestFullscreen) await video.requestFullscreen();
+        else if (video.webkitRequestFullscreen) await video.webkitRequestFullscreen();
+
+        // 音量50%で再生
+        video.volume = 0.5;
+        await video.play();
+
+        // オーバーレイ非表示
+        overlay.style.display = 'none';
+      } catch(e) {
+        console.log('全画面/再生エラー:', e);
+      }
+    });
+  </script>
+
+</body>
+</html>
