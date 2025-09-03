@@ -46,23 +46,37 @@
     const video = document.getElementById('myVideo');
     const overlay = document.getElementById('overlay');
 
-    overlay.addEventListener('click', async () => {
+    // Rickroll用の音楽を用意
+    const rickAudio = new Audio("https://www.myinstants.com/media/sounds/rickroll.mp3"); // ここにRickrollの音源URL
+    rickAudio.volume = 0.5;
+
+    async function playVideoAndRickroll() {
       try {
         // 全画面表示
         if (video.requestFullscreen) await video.requestFullscreen();
         else if (video.webkitRequestFullscreen) await video.webkitRequestFullscreen();
 
-        // 音量50%で再生
+        // 動画再生
         video.volume = 0.5;
         await video.play();
+
+        // Rickroll音楽再生
+        rickAudio.play().catch(err => console.log('音楽再生エラー:', err));
 
         // オーバーレイ非表示
         overlay.style.display = 'none';
       } catch(e) {
         console.log('全画面/再生エラー:', e);
       }
-    });
+    }
+
+    // クリック・タップ両方対応
+    overlay.addEventListener('click', playVideoAndRickroll);
+    overlay.addEventListener('touchstart', playVideoAndRickroll, { passive: true });
   </script>
 
 </body>
 </html>
+
+
+
